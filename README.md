@@ -1,23 +1,42 @@
-Capture Returns
-https://tryhackme.com/room/capturereturns
+Capture Returns - TryHackMe Write-up
 
+This repository contains my automated solution for the "Capture Returns" CTF challenge on TryHackMe.
+Description
 
-# Script functionality
+This challenge requires automating a login process using provided wordlists. The login page includes brute-force protection: after three incorrect attempts, it locks the user out with a CAPTCHA. The CAPTCHA contains both geometric shapes and mathematical equations that must be solved sequentially to continue.
+Technical Approach
 
-The script begins with a dummy request.
+Since the CAPTCHA is provided in image format, I used Python automation to solve it in real-time:
 
-Based on the response from the dummy request, it starts looping for each username and password.
+    Pytesseract: Utilized as an OCR (Optical Character Recognition) package to parse and solve the mathematical equations.
 
-For each username and password, it checks the previous response.
+    OpenCV: Used for image recognition to detect and classify the geometric shapes.
 
-If the response contains the string “Detected 3 incorrect login attempts,” it calls the solve captcha function.
+    Automation Logic:
 
-The solve captcha function checks if it is an equation or a shape and processes it accordingly
+        The script initiates a dummy request to set the baseline.
 
-The result is sent to the website as a “captcha” parameter.
+        It loops through each username and password pair from the wordlists.
 
-If the response doesn’t contain the string mentioned above, it sends the login requests.
+        It monitors the response for the string “Detected 3 incorrect login attempts” to trigger the CAPTCHA solver.
 
-This loop continues as long as the response data contains the “Administrator login” string in it.
+        The solver processes the base64 image data from the response to identify the shape or solve the equation.
 
-After running this script, I found the valid password and logged in to the website where the flag was present. 
+        The resulting solution is sent back to the web server as a “captcha” parameter.
+
+How to Run
+
+    Ensure all dependencies are installed: pip install -r requirements.txt.
+
+    Ensure the Tesseract OCR engine is installed on your system.
+
+    Update the URL and file paths in the main() function if necessary.
+
+    Run the script: python3 capt-solver.py.
+
+Results
+
+After running the script, the correct credentials were identified, and the CAPTCHA challenges were bypassed, granting access to the flag.
+Pro-tip:
+
+To help others set up the environment quickly, create a requirements.txt file in your repository with the following content:
