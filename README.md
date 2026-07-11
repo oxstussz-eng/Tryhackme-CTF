@@ -1,6 +1,6 @@
 Capture Returns - TryHackMe Write-up
 
-This repository contains my automated solution for the "Capture Returns" CTF challenge on TryHackMe.
+Room Link: https://tryhackme.com/room/capturereturns
 Description
 
 This challenge requires automating a login process using provided wordlists. The login page includes brute-force protection: after three incorrect attempts, it locks the user out with a CAPTCHA. The CAPTCHA contains both geometric shapes and mathematical equations that must be solved sequentially to continue.
@@ -37,6 +37,3 @@ How to Run
 Results
 
 After running the script, the correct credentials were identified, and the CAPTCHA challenges were bypassed, granting access to the flag.
-Pro-tip:
-
-To help others set up the environment quickly, create a requirements.txt file in your repository with the following content:
