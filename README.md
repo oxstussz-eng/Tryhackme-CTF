@@ -1,39 +1,29 @@
 Capture Returns - TryHackMe Write-up
 
 Room Link: https://tryhackme.com/room/capturereturns
-Description
+Overview
 
-This challenge requires automating a login process using provided wordlists. The login page includes brute-force protection: after three incorrect attempts, it locks the user out with a CAPTCHA. The CAPTCHA contains both geometric shapes and mathematical equations that must be solved sequentially to continue.
+This challenge involves automating a login process using provided wordlists. The login page implements brute-force protection, triggering a CAPTCHA lockout after three incorrect login attempts. The CAPTCHA itself is dynamic, containing either geometric shapes or mathematical equations.
 Technical Approach
 
-Since the CAPTCHA is provided in image format, I used Python automation to solve it in real-time:
+To bypass the lockout and automate the process, I developed a Python script leveraging OCR and image recognition tools:
 
-    Pytesseract: Utilized as an OCR (Optical Character Recognition) package to parse and solve the mathematical equations.
+    Pytesseract: Used for OCR to parse and solve mathematical equations present in the CAPTCHA.
 
-    OpenCV: Used for image recognition to detect and classify the geometric shapes.
+    OpenCV: Used for contour detection to identify geometric shapes (circles, squares, and triangles).
 
-    Automation Logic:
+# Automation Logic:
 
-        The script initiates a dummy request to set the baseline.
+        The script initiates with a dummy request to capture the session state.
 
-        It loops through each username and password pair from the wordlists.
+        It iterates through the provided usernames and passwords.
 
-        It monitors the response for the string “Detected 3 incorrect login attempts” to trigger the CAPTCHA solver.
+        It monitors responses for the lockout string (“Detected 3 incorrect login attempts”).
 
-        The solver processes the base64 image data from the response to identify the shape or solve the equation.
+        Upon detecting a lockout, the script processes the base64 image data from the response to solve the CAPTCHA.
 
-        The resulting solution is sent back to the web server as a “captcha” parameter.
+        The solution is submitted back to the server as a “captcha” parameter to resume the brute-force attack.
 
-How to Run
+Conclusion
 
-    Ensure all dependencies are installed: pip install -r requirements.txt.
-
-    Ensure the Tesseract OCR engine is installed on your system.
-
-    Update the URL and file paths in the main() function if necessary.
-
-    Run the script: python3 capt-solver.py.
-
-Results
-
-After running the script, the correct credentials were identified, and the CAPTCHA challenges were bypassed, granting access to the flag.
+By automating the CAPTCHA-solving process, I successfully identified the valid credentials and retrieved the flag from the Administrator dashboard.
